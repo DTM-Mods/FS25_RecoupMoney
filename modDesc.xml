@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<modDesc descVersion="99" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
+    <author>Fennell</author>
+    <version>0.1.0.0</version>
+    <title>
+        <en>Recoup Money</en>
+    </title>
+    <description>
+        <en><![CDATA[Sell a silo, production, animal pen or any other building with goods still in it and get paid for what is inside instead of losing it.
+
+Every fill type is paid at the best price any selling point currently offers, the same prices shown in the price list. Goods that no selling point buys (chaff, manure, ...) are paid at their base price.
+
+Works for silos, silo extensions, production points, animal storages and feed, manure heaps, bunker silos and mod buildings that use a standard storage. The payout shows up as income and in a notification listing what was sold.
+
+Console command:
+rmList [farmId] - every building holding goods and what selling it would pay]]></en>
+    </description>
+
+    <iconFilename>icon_recoupMoney.png</iconFilename>
+    <multiplayer supported="true"/>
+
+    <extraSourceFiles>
+        <sourceFile filename="scripts/RecoupMoney.lua"/>
+    </extraSourceFiles>
+
+    <l10n>
+        <text name="recoupMoney_notification">
+            <en>Contents of %s sold for %s: %s</en>
+        </text>
+        <text name="recoupMoney_more">
+            <en>%d more</en>
+        </text>
+    </l10n>
+</modDesc>
