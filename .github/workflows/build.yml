@@ -1,0 +1,21 @@
+# Checks the mod on every push and pull request, and publishes a release when you push a tag
+# v<version in modDesc.xml>. The steps live in DTM-Mods/.github (.github/workflows/fs25-mod.yml).
+name: Build
+
+on:
+  push:
+    branches: ["**"]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write     # publish releases on tags
+  actions: write      # start the Discord release post
+
+jobs:
+  mod:
+    uses: DTM-Mods/.github/.github/workflows/fs25-mod.yml@main
+    # with:
+    #   max-files: 0            # no GIANTS ModHub 128-file limit (big mods that never go to ModHub)
+    #   test-command: python tests/run_all.py
