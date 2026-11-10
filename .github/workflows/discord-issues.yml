@@ -1,0 +1,50 @@
+# Posts every newly opened issue to #staff-chat in the DTM Mods Discord.
+# Needs the repository secret DISCORD_STAFF_WEBHOOK (the Discord webhook URL).
+name: Discord issue post
+
+on:
+  issues:
+    types: [opened]
+
+permissions: {}
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to Discord
+        env:
+          WEBHOOK: ${{ secrets.DISCORD_STAFF_WEBHOOK }}
+        run: |
+          python3 - <<'EOF'
+          import json, os, urllib.request
+
+          event = json.load(open(os.environ["GITHUB_EVENT_PATH"]))
+          issue, repo = event["issue"], event["repository"]["name"]
+          body = (issue.get("body") or "").strip()
+          if len(body) > 1500:
+              body = body[:1500].rstrip() + "\n\n...more on GitHub"
+          labels = ", ".join(l["name"] for l in issue.get("labels", []))
+
+          payload = {
+              "username": "DTM GitHub",
+              "content": f'New issue in **{repo.removeprefix("FS25_")}**',
+              "allowed_mentions": {"parse": []},
+              "embeds": [{
+                  "title": f'#{issue["number"]} {issue["title"]}'[:256],
+                  "url": issue["html_url"],
+                  "description": body or "No description.",
+                  "color": 0xE74C3C,
+                  "author": {"name": issue["user"]["login"], "url": issue["user"]["html_url"],
+                             "icon_url": issue["user"]["avatar_url"]},
+                  "footer": {"text": repo + (f" · {labels}" if labels else "")},
+                  "timestamp": issue["created_at"],
+              }],
+          }
+          if not os.environ.get("WEBHOOK"):
+              raise SystemExit("The DISCORD_STAFF_WEBHOOK secret is not set")
+          req = urllib.request.Request(os.environ["WEBHOOK"] + "?wait=true", data=json.dumps(payload).encode(),
+                                       headers={"Content-Type": "application/json", "User-Agent": "dtm-issue-post"})
+          with urllib.request.urlopen(req) as r:
+              print("Posted to Discord, HTTP", r.status)
+          EOF

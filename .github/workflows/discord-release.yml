@@ -1,13 +1,15 @@
-# Posts a published release to the DTM Mods Discord (#mod-releases) and pings @Release Pings.
+# Posts a published release to the DTM Mods Discord.
+#   Full release -> #mod-releases, pings @Release Pings  (secret DISCORD_RELEASES_WEBHOOK)
+#   Pre-release  -> #testing,      pings @Tester         (secret DISCORD_TESTING_WEBHOOK)
+# A pre-release that is later turned into a full release is posted to #mod-releases then.
 # Runs by itself when a release is published by hand. A release made by another workflow with the
 # built-in GITHUB_TOKEN does not trigger it, so such a workflow starts it afterwards with:
 #   gh workflow run discord-release.yml -f tag=<tag>
-# Needs the repository secret DISCORD_RELEASES_WEBHOOK (the Discord webhook URL).
 name: Discord release post
 
 on:
   release:
-    types: [published]
+    types: [published, released]
   workflow_dispatch:
     inputs:
       tag:
@@ -29,37 +31,53 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          WEBHOOK: ${{ secrets.DISCORD_RELEASES_WEBHOOK }}
+          RELEASES_WEBHOOK: ${{ secrets.DISCORD_RELEASES_WEBHOOK }}
+          TESTING_WEBHOOK: ${{ secrets.DISCORD_TESTING_WEBHOOK }}
+          ACTION: ${{ github.event.action }}
           TAG: ${{ github.event.release.tag_name || inputs.tag }}
           DRY_RUN: ${{ inputs.dry_run || false }}
-          ROLE_ID: "1569731457105010689"
+          RELEASE_PINGS_ROLE: "1569731457105010689"
+          TESTER_ROLE: "1569731086559355030"
         run: |
           gh release view "$TAG" --json name,tagName,body,url,isPrerelease,isDraft > release.json
           python3 - <<'EOF'
           import json, os, urllib.request
 
           rel = json.load(open("release.json"))
+          action = os.environ.get("ACTION", "")
           if rel["isDraft"]:
               print("Draft release, nothing to post")
+              raise SystemExit(0)
+          if action == "published" and not rel["isPrerelease"]:
+              print("Full release: the 'released' event posts it")
+              raise SystemExit(0)
+          if action == "released" and rel["isPrerelease"]:
               raise SystemExit(0)
 
           repo = os.environ["GH_REPO"].split("/")[1]
           title = rel["name"] or f'{repo.removeprefix("FS25_").replace("_", " ")} {rel["tagName"]}'
-          test = " (test build)" if rel["isPrerelease"] else ""
-          role = os.environ["ROLE_ID"]
           body = (rel["body"] or "").strip()
           if len(body) > 3800:
               body = body[:3800].rstrip() + "\n\n...full notes on GitHub"
 
+          if rel["isPrerelease"]:
+              role, webhook = os.environ["TESTER_ROLE"], os.environ.get("TESTING_WEBHOOK")
+              content = f"<@&{role}> Test build **{title}** is up. Give it a go and report back here."
+              embed_title, color, user, secret = f"{title} (test build)", 0xF59E0B, "DTM Test Builds", "DISCORD_TESTING_WEBHOOK"
+          else:
+              role, webhook = os.environ["RELEASE_PINGS_ROLE"], os.environ.get("RELEASES_WEBHOOK")
+              content = f"<@&{role}> **{title}** is out!"
+              embed_title, color, user, secret = title, 0x2ECC71, "DTM Releases", "DISCORD_RELEASES_WEBHOOK"
+
           payload = {
-              "username": "DTM Releases",
-              "content": f"<@&{role}> **{title}** is out!{test}",
+              "username": user,
+              "content": content,
               "allowed_mentions": {"roles": [role]},
               "embeds": [{
-                  "title": f"{title}{test}",
+                  "title": embed_title,
                   "url": rel["url"],
                   "description": body or "No release notes.",
-                  "color": 0xF59E0B if test else 0x2ECC71,
+                  "color": color,
                   "footer": {"text": repo},
               }],
           }
@@ -67,11 +85,11 @@ jobs:
           if os.environ.get("DRY_RUN") == "true":
               print(json.dumps(payload, indent=2))
               raise SystemExit(0)
-          if not os.environ.get("WEBHOOK"):
-              raise SystemExit("The DISCORD_RELEASES_WEBHOOK secret is not set")
+          if not webhook:
+              raise SystemExit(f"The {secret} secret is not set")
 
           req = urllib.request.Request(
-              os.environ["WEBHOOK"] + "?wait=true",
+              webhook + "?wait=true",
               data=json.dumps(payload).encode(),
               headers={"Content-Type": "application/json", "User-Agent": "dtm-release-post"},
           )
