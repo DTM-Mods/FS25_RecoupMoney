@@ -1,0 +1,23 @@
+# DTM standard (the same in every DTM-Mods repository).
+# Binary files: git never changes their line endings and doesn't try to diff or merge them.
+*.dds    binary
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.webp   binary
+*.gif    binary
+*.ico    binary
+*.ogg    binary
+*.wav    binary
+*.shapes binary
+*.gdm    binary
+*.grle   binary
+*.zip    binary
+*.blend  binary
+*.psd    binary
+*.fbx    binary
+*.ttf    binary
+*.otf    binary
+*.woff2  binary
+*.mp4    binary
+*.pdf    binary
