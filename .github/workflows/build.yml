@@ -1,5 +1,8 @@
 # Checks the mod on every push and pull request, and publishes a release when you push a tag
 # v<version in modDesc.xml>. The steps live in DTM-Mods/.github (.github/workflows/fs25-mod.yml).
+# This file is the same in every DTM mod repository; only the settings under "with:" differ.
+#
+# Try a release without publishing it: Actions > Build > Run workflow, enter the tag (v1.2.0.0).
 name: Build
 
 on:
@@ -8,6 +11,11 @@ on:
     tags: ["v*"]
   pull_request:
   workflow_dispatch:
+    inputs:
+      test-tag:
+        description: "Try a release without publishing it: the tag, e.g. v1.2.0.0 (leave empty to just build)"
+        type: string
+        default: ""
 
 permissions:
   contents: write     # publish releases on tags
@@ -16,6 +24,9 @@ permissions:
 jobs:
   mod:
     uses: DTM-Mods/.github/.github/workflows/fs25-mod.yml@main
-    # with:
-    #   max-files: 0            # no GIANTS ModHub 128-file limit (big mods that never go to ModHub)
-    #   test-command: python tests/run_all.py
+    with:
+      test-tag: ${{ inputs.test-tag || '' }}
+      # Settings for this mod (all optional, see DTM-Mods/.github ci/README.md):
+      # zip-name: FS25_Name          # the mod's real zip name, when it differs from the repository name
+      # max-files: 0                 # no GIANTS ModHub 128-file limit (big mods that never go to ModHub)
+      # test-command: python tests/run_all.py
