@@ -9,14 +9,18 @@
 <h1 align="center">Recoup Money</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Farming%20Simulator-25-2e7d32" alt="Farming Simulator 25">
-  <img src="https://img.shields.io/badge/version-0.1.0.0-c77d2e" alt="Version 0.1.0.0">
-  <img src="https://img.shields.io/badge/multiplayer-supported-2e7d32" alt="Multiplayer supported">
-  <a href="https://github.com/DTM-Mods"><img src="https://img.shields.io/badge/DTM-Mods-1f6f6b" alt="DTM Mods"></a>
+  <img src="https://img.shields.io/badge/Farming%20Simulator-25-2E6B4F" alt="Farming Simulator 25">
+  <a href="https://github.com/DTM-Mods/FS25_RecoupMoney/releases/latest"><img src="https://img.shields.io/github/v/release/DTM-Mods/FS25_RecoupMoney?label=version&color=D9A441" alt="Latest version"></a>
+  <img src="https://img.shields.io/badge/multiplayer-supported-2E6B4F" alt="Multiplayer supported">
+  <a href="https://github.com/DTM-Mods"><img src="https://img.shields.io/badge/DTM-Mods-143326" alt="DTM Mods"></a>
 </p>
 
 <p align="center">
   <b>Sell a silo, production, animal pen or any other building with goods still in it and get paid for what's inside instead of losing it.</b>
+</p>
+
+<p align="center">
+  <a href="https://github.com/DTM-Mods/FS25_RecoupMoney/releases/latest"><img src="https://img.shields.io/badge/Download-latest%20release-D9A441?style=for-the-badge&logo=github&logoColor=143326&labelColor=E9C77A" alt="Download the latest release"></a>
 </p>
 
 <p align="center">
