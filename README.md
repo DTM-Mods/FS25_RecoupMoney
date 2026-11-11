@@ -38,7 +38,9 @@
 | --- | --- |
 | `rmList [farmId]` | Every building holding goods and what selling it would pay |
 
-## Installation
+<p align="center">
+  <img src="https://raw.githubusercontent.com/DTM-Mods/.github/main/assets/installation.jpg" alt="Installation" width="100%">
+</p>
 
 Put `FS25_RecoupMoney.zip` in `Documents/My Games/FarmingSimulator2025/mods`. In multiplayer, install it on the server and on every player's game.
 
