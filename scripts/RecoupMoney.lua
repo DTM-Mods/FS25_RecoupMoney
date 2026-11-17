@@ -28,8 +28,8 @@ function RecoupMoney.getStorageFillLevels(storage)
         return nil
     end
     if type(storage.getFillLevels) == "function" then
-        local ok, fillLevels = pcall(storage.getFillLevels, storage)
-        if ok and type(fillLevels) == "table" then
+        local fillLevels = storage:getFillLevels()
+        if type(fillLevels) == "table" then
             return fillLevels
         end
     end
@@ -126,15 +126,19 @@ function RecoupMoney.getSellingStations(excludePlaceable)
 end
 
 function RecoupMoney.getBasePricePerLiter(fillTypeIndex)
+    -- the economy manager looks the fill type up and needs it to exist
+    local fillType = g_fillTypeManager:getFillTypeByIndex(fillTypeIndex)
+    if fillType == nil then
+        return 0
+    end
     local economyManager = g_currentMission.economyManager
     if economyManager ~= nil and economyManager.getPricePerLiter ~= nil then
-        local ok, price = pcall(economyManager.getPricePerLiter, economyManager, fillTypeIndex)
-        if ok and type(price) == "number" then
+        local price = economyManager:getPricePerLiter(fillTypeIndex)
+        if type(price) == "number" then
             return price
         end
     end
-    local fillType = g_fillTypeManager:getFillTypeByIndex(fillTypeIndex)
-    return (fillType ~= nil and fillType.pricePerLiter) or 0
+    return fillType.pricePerLiter or 0
 end
 
 -- Best current price per liter and whether a selling point offers it (false = base price fallback)
@@ -142,8 +146,8 @@ function RecoupMoney.getPricePerLiter(fillTypeIndex, stations)
     local bestPrice = 0
     for _, station in ipairs(stations) do
         if station.acceptedFillTypes[fillTypeIndex] then
-            local ok, price = pcall(station.getEffectiveFillTypePrice, station, fillTypeIndex)
-            if ok and type(price) == "number" and price > bestPrice then
+            local price = station:getEffectiveFillTypePrice(fillTypeIndex)
+            if type(price) == "number" and price > bestPrice then
                 bestPrice = price
             end
         end
@@ -216,7 +220,10 @@ end
 
 -- Server only: runs just before the placeable's own onSell, while its storages are still full
 function RecoupMoney.payOut(placeable)
-    if placeable.recoupMoneyPaid or not g_currentMission:getIsServer() then
+    if type(placeable) ~= "table" or placeable.recoupMoneyPaid or g_currentMission == nil or not g_currentMission:getIsServer() then
+        return
+    end
+    if placeable.getOwnerFarmId == nil then
         return
     end
 
@@ -233,7 +240,7 @@ function RecoupMoney.payOut(placeable)
 
     g_currentMission:addMoney(total, farmId, RecoupMoney.getMoneyType(), true, true)
 
-    local name = placeable:getName() or "?"
+    local name = placeable.getName ~= nil and placeable:getName() or "?"
     print(string.format("RecoupMoney: sold contents of '%s' (farm %d) for %s", name, farmId, g_i18n:formatMoney(total, 0, true, true)))
     for _, line in ipairs(lines) do
         print("  " .. RecoupMoney.formatLine(line))
@@ -255,11 +262,7 @@ function RecoupMoney.payOut(placeable)
 end
 
 function RecoupMoney.onPlaceableSell(placeable)
-    -- Never let a problem here stop the sale itself
-    local ok, err = pcall(RecoupMoney.payOut, placeable)
-    if not ok then
-        Logging.error("RecoupMoney: could not pay out the contents of a sold placeable: %s", tostring(err))
-    end
+    RecoupMoney.payOut(placeable)
 end
 
 Placeable.onSell = Utils.prependedFunction(Placeable.onSell, RecoupMoney.onPlaceableSell)

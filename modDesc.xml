@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<modDesc descVersion="99" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
+<modDesc descVersion="115" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>DTM Mods, Fennell</author>
-    <version>0.1.0.2</version>
+    <version>1.0.0.0</version>
     <title>
         <en>Recoup Money</en>
     </title>
@@ -14,9 +14,17 @@ Works for silos, silo extensions, production points, animal storages and feed, m
 
 Console command:
 rmList [farmId] - every building holding goods and what selling it would pay]]></en>
+        <de><![CDATA[Verkaufe ein Silo, eine Produktion, einen Tierstall oder ein anderes Gebäude, in dem noch Waren lagern, und lass dir den Inhalt bezahlen, statt ihn zu verlieren.
+
+Jede Füllart wird zum besten Preis bezahlt, den eine Verkaufsstelle gerade bietet, also zu denselben Preisen wie in der Preisliste. Waren, die keine Verkaufsstelle annimmt (Häckselgut, Mist, ...), werden zu ihrem Grundpreis bezahlt.
+
+Funktioniert mit Silos, Siloerweiterungen, Produktionen, Tierlagern und Futter, Misthaufen, Fahrsilos und Mod-Gebäuden, die ein Standardlager verwenden. Die Auszahlung erscheint als Einnahme und in einer Benachrichtigung, die auflistet, was verkauft wurde.
+
+Konsolenbefehl:
+rmList [farmId] - jedes Gebäude mit Waren und was sein Verkauf einbringen würde]]></de>
     </description>
 
-    <iconFilename>icon_recoupMoney.png</iconFilename>
+    <iconFilename>icon_recoupMoney.dds</iconFilename>
     <multiplayer supported="true"/>
 
     <extraSourceFiles>
