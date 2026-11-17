@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="116" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>DTM Mods, Fennell</author>
-    <version>1.0.0.1</version>
+    <version>1.0.0.2</version>
     <title>
         <en>Recoup Money</en>
     </title>
@@ -14,8 +14,9 @@ Every fill type is paid at the best price any selling point currently offers, th
 
 Works for silos, silo extensions, production points, animal storages and feed, manure heaps, bunker silos and mod buildings that use a standard storage. The payout shows up as income and in a notification listing what was sold.
 
-Changelog 1.0.0.1:
-- Updated for the current game version (modDesc version 116).]]></en>
+Changelog 1.0.0.2:
+- Description in GIANTS' ModHub layout (category, price, upkeep or hotkeys at the top).
+- New mod icon in the ModHub standard.]]></en>
         <de><![CDATA[Beschreibung: Verkaufe ein Silo, eine Produktion, einen Tierstall oder ein anderes Gebäude, in dem noch Waren lagern, und lass dir den Inhalt bezahlen, statt ihn zu verlieren.
 Tastenkombinationen: keine, es geschieht von selbst, wenn du ein Gebäude verkaufst. Konsolenbefehl: rmList [farmId] listet jedes Gebäude mit Waren und was sein Verkauf einbringen würde.
 GitHub: https://github.com/DTM-Mods/FS25_RecoupMoney
@@ -24,8 +25,9 @@ Jede Füllart wird zum besten Preis bezahlt, den eine Verkaufsstelle gerade biet
 
 Funktioniert mit Silos, Siloerweiterungen, Produktionen, Tierlagern und Futter, Misthaufen, Fahrsilos und Mod-Gebäuden, die ein Standardlager verwenden. Die Auszahlung erscheint als Einnahme und in einer Benachrichtigung, die auflistet, was verkauft wurde.
 
-Changelog 1.0.0.1:
-- An die aktuelle Spielversion angepasst (modDesc-Version 116).]]></de>
+Changelog 1.0.0.2:
+- Beschreibung im ModHub-Aufbau von GIANTS (Kategorie, Preis, Unterhalt bzw. Tasten oben).
+- Neues Mod-Icon im ModHub-Standard.]]></de>
     </description>
 
     <iconFilename>icon_recoupMoney.dds</iconFilename>
