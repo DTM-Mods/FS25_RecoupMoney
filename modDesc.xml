@@ -6,25 +6,23 @@
         <en>Recoup Money</en>
     </title>
     <description>
-        <en><![CDATA[Sell a silo, production, animal pen or any other building with goods still in it and get paid for what is inside instead of losing it.
+        <en><![CDATA[Description: Sell a silo, production, animal pen or any other building with goods still in it and get paid for what is inside instead of losing it.
+Hotkeys: none, it works by itself whenever you sell a building. Console command: rmList [farmId] lists every building holding goods and what selling it would pay.
+GitHub: https://github.com/DTM-Mods/FS25_RecoupMoney
 
 Every fill type is paid at the best price any selling point currently offers, the same prices shown in the price list. Goods that no selling point buys (chaff, manure, ...) are paid at their base price.
 
 Works for silos, silo extensions, production points, animal storages and feed, manure heaps, bunker silos and mod buildings that use a standard storage. The payout shows up as income and in a notification listing what was sold.
 
-Console command:
-rmList [farmId] - every building holding goods and what selling it would pay
-
 Changelog 1.0.0.1:
 - Updated for the current game version (modDesc version 116).]]></en>
-        <de><![CDATA[Verkaufe ein Silo, eine Produktion, einen Tierstall oder ein anderes Gebäude, in dem noch Waren lagern, und lass dir den Inhalt bezahlen, statt ihn zu verlieren.
+        <de><![CDATA[Beschreibung: Verkaufe ein Silo, eine Produktion, einen Tierstall oder ein anderes Gebäude, in dem noch Waren lagern, und lass dir den Inhalt bezahlen, statt ihn zu verlieren.
+Tastenkombinationen: keine, es geschieht von selbst, wenn du ein Gebäude verkaufst. Konsolenbefehl: rmList [farmId] listet jedes Gebäude mit Waren und was sein Verkauf einbringen würde.
+GitHub: https://github.com/DTM-Mods/FS25_RecoupMoney
 
 Jede Füllart wird zum besten Preis bezahlt, den eine Verkaufsstelle gerade bietet, also zu denselben Preisen wie in der Preisliste. Waren, die keine Verkaufsstelle annimmt (Häckselgut, Mist, ...), werden zu ihrem Grundpreis bezahlt.
 
 Funktioniert mit Silos, Siloerweiterungen, Produktionen, Tierlagern und Futter, Misthaufen, Fahrsilos und Mod-Gebäuden, die ein Standardlager verwenden. Die Auszahlung erscheint als Einnahme und in einer Benachrichtigung, die auflistet, was verkauft wurde.
-
-Konsolenbefehl:
-rmList [farmId] - jedes Gebäude mit Waren und was sein Verkauf einbringen würde
 
 Changelog 1.0.0.1:
 - An die aktuelle Spielversion angepasst (modDesc-Version 116).]]></de>

@@ -35,53 +35,35 @@ Récupérer l'argent
 
 ## Description English
 ```text
-Sell a silo, production, animal pen or any other building with goods still in it and get paid for what is inside instead of losing it.
+Description: Sell a silo, production, animal pen or any other building with goods still in it and get paid for what is inside instead of losing it.
+Hotkeys: none, it works by itself whenever you sell a building. Console command: rmList [farmId] lists every building holding goods and what selling it would pay.
+GitHub: https://github.com/DTM-Mods/FS25_RecoupMoney
 
-- Every fill type is paid at the best price any selling point currently offers, the same prices shown in the price list.
-- Goods that no selling point buys (chaff, manure, ...) are paid at their base price.
-- Works for silos, silo extensions, production points, animal pens and their feed, manure heaps, bunker silos and mod buildings that use a standard storage.
-- The payout shows up as income and in a notification listing what was sold.
-- Multiplayer: install it on the server and on every player's game.
+Every fill type is paid at the best price any selling point currently offers, the same prices shown in the price list. Goods that no selling point buys (chaff, manure, ...) are paid at their base price.
 
-How to use: sell the building as usual. To check first, type rmList [farmId] in the developer console: it lists every building holding goods and what selling it would pay.
-
-Changelog 0.1.0.1:
-- New mod icon in the DTM Mods style.
-- No other changes.
+Works for silos, silo extensions, production points, animal storages and feed, manure heaps, bunker silos and mod buildings that use a standard storage. The payout shows up as income and in a notification listing what was sold.
 ```
 
 ## Description German
 ```text
-Verkaufe ein Silo, eine Produktion, einen Tierstall oder ein anderes Gebäude, in dem noch Waren lagern, und bekomme den Inhalt bezahlt, statt ihn zu verlieren.
+Beschreibung: Verkaufe ein Silo, eine Produktion, einen Tierstall oder ein anderes Gebäude, in dem noch Waren lagern, und lass dir den Inhalt bezahlen, statt ihn zu verlieren.
+Tastenkombinationen: keine, es geschieht von selbst, wenn du ein Gebäude verkaufst. Konsolenbefehl: rmList [farmId] listet jedes Gebäude mit Waren und was sein Verkauf einbringen würde.
+GitHub: https://github.com/DTM-Mods/FS25_RecoupMoney
 
-- Jede Ware wird zum besten Preis bezahlt, den eine Verkaufsstelle gerade bietet, also zu den Preisen aus der Preisliste.
-- Waren, die keine Verkaufsstelle kauft (Häckselgut, Mist, ...), werden zum Grundpreis bezahlt.
-- Funktioniert mit Silos, Silo-Erweiterungen, Produktionen, Tierställen samt Futter, Misthaufen, Fahrsilos und Mod-Gebäuden mit einem normalen Lager.
-- Die Auszahlung erscheint als Einnahme und in einer Benachrichtigung, die auflistet, was verkauft wurde.
-- Mehrspieler: auf dem Server und bei jedem Spieler installieren.
+Jede Füllart wird zum besten Preis bezahlt, den eine Verkaufsstelle gerade bietet, also zu denselben Preisen wie in der Preisliste. Waren, die keine Verkaufsstelle annimmt (Häckselgut, Mist, ...), werden zu ihrem Grundpreis bezahlt.
 
-So geht's: Verkaufe das Gebäude ganz normal. Zum Nachsehen vorher rmList [farmId] in die Entwicklerkonsole eingeben: Es listet jedes Gebäude mit Waren und was sein Verkauf einbringen würde.
-
-Changelog 0.1.0.1:
-- Neues Mod-Icon im Stil von DTM Mods.
-- Sonst keine Änderungen.
+Funktioniert mit Silos, Siloerweiterungen, Produktionen, Tierlagern und Futter, Misthaufen, Fahrsilos und Mod-Gebäuden, die ein Standardlager verwenden. Die Auszahlung erscheint als Einnahme und in einer Benachrichtigung, die auflistet, was verkauft wurde.
 ```
 
 ## Description French
 ```text
-Vendez un silo, une production, un enclos ou tout autre bâtiment qui contient encore des marchandises, et soyez payé pour son contenu au lieu de le perdre.
+Description : vendez un silo, une production, un enclos ou tout autre bâtiment qui contient encore des marchandises, et soyez payé pour son contenu au lieu de le perdre.
+Raccourcis clavier : aucun, cela se fait tout seul quand vous vendez un bâtiment. Commande console : rmList [farmId] liste chaque bâtiment contenant des marchandises et ce que sa vente rapporterait.
+GitHub : https://github.com/DTM-Mods/FS25_RecoupMoney
 
-- Chaque produit est payé au meilleur prix proposé en ce moment par un point de vente, les mêmes prix que dans la liste des prix.
-- Les marchandises qu'aucun point de vente n'achète (fourrage haché, fumier, ...) sont payées à leur prix de base.
-- Fonctionne avec les silos, extensions de silo, productions, enclos et leur nourriture, tas de fumier, silos couloirs et bâtiments de mods qui utilisent un stockage standard.
-- Le paiement apparaît comme revenu et dans une notification qui liste ce qui a été vendu.
-- Multijoueur : à installer sur le serveur et chez chaque joueur.
+Chaque type de remplissage est payé au meilleur prix proposé en ce moment par un point de vente, les mêmes prix que dans la liste des prix. Les marchandises qu'aucun point de vente n'achète (fourrage haché, fumier, ...) sont payées à leur prix de base.
 
-Utilisation : vendez le bâtiment comme d'habitude. Pour vérifier avant, tapez rmList [farmId] dans la console de développement : elle liste chaque bâtiment contenant des marchandises et ce que sa vente rapporterait.
-
-Changelog 0.1.0.1 :
-- Nouvelle icône du mod dans le style DTM Mods.
-- Aucun autre changement.
+Fonctionne avec les silos, extensions de silo, productions, stockages et nourriture des animaux, tas de fumier, silos couloirs et bâtiments de mods qui utilisent un stockage standard. Le paiement apparaît comme revenu et dans une notification qui liste ce qui a été vendu.
 ```
 
 ## Before uploading
