@@ -40,8 +40,23 @@ jobs:
           TESTER_ROLE: "1569731086559355030"
         run: |
           gh release view "$TAG" --json name,tagName,body,url,isPrerelease,isDraft > release.json
+          # one full release (this one) means it's a new mod, more is an update
+          gh release list --exclude-drafts --exclude-pre-releases --limit 2 --json tagName > full-releases.json
+          # the shared emoji helper (DTM-Mods/.github ci/discord_emojis.py); without it the post has no emojis
+          curl -fsSL --retry 2 -o "$RUNNER_TEMP/discord_emojis.py" \
+            https://raw.githubusercontent.com/DTM-Mods/.github/main/ci/discord_emojis.py \
+            || echo "::warning::discord_emojis.py not downloaded, posting without emojis"
           python3 - <<'EOF'
-          import json, os, re, urllib.request
+          import json, os, re, sys, urllib.request
+          sys.path.insert(0, os.environ["RUNNER_TEMP"])
+          try:
+              import discord_emojis as emo
+          except Exception:
+              emo = None
+
+          def E(kind):
+              """The DTM Discord's custom emoji for this kind of post (Unicode if it has none), and a space."""
+              return emo.get(kind) + " " if emo else ""
 
           rel = json.load(open("release.json"))
           action = os.environ.get("ACTION", "")
@@ -60,14 +75,18 @@ jobs:
           body = re.sub(r"<p[^>]*>\s*<img[^>]*>\s*</p>\s*", "", rel["body"] or "").strip()
           if len(body) > 3800:
               body = body[:3800].rstrip() + "\n\n...full notes on GitHub"
+          # a bug fixed in this release: its emoji at the start of each "Fixed ..." line
+          body = re.sub(r"(?im)^([ \t]*(?:[-*+]|#{1,6})[ \t]+)(?=(?:\*\*)?(?:bug[ \t]*)?fix(?:es|ed)?\b)",
+                        lambda m: m.group(1) + E("fixed"), body)
 
           if rel["isPrerelease"]:
               role, webhook = os.environ["TESTER_ROLE"], os.environ.get("TESTING_WEBHOOK")
-              content = f"<@&{role}> Test build **{title}** is up. Give it a go and report back here."
+              content = f"{E('test')}<@&{role}> Test build **{title}** is up. Give it a go and report back here."
               embed_title, color, user, secret = f"{title} (test build)", 0xF59E0B, "DTM Test Builds", "DISCORD_TESTING_WEBHOOK"
           else:
               role, webhook = os.environ["RELEASE_PINGS_ROLE"], os.environ.get("RELEASES_WEBHOOK")
-              content = f"<@&{role}> **{title}** is out!"
+              first = len(json.load(open("full-releases.json"))) <= 1
+              content = f"{E('new_mod' if first else 'update')}<@&{role}> **{title}** is out!"
               embed_title, color, user, secret = title, 0xD9A441, "DTM Releases", "DISCORD_RELEASES_WEBHOOK"
 
           payload = {

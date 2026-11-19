@@ -16,8 +16,21 @@ jobs:
         env:
           WEBHOOK: ${{ secrets.DISCORD_STAFF_WEBHOOK }}
         run: |
+          # the shared emoji helper (DTM-Mods/.github ci/discord_emojis.py); without it the post has no emojis
+          curl -fsSL --retry 2 -o "$RUNNER_TEMP/discord_emojis.py" \
+            https://raw.githubusercontent.com/DTM-Mods/.github/main/ci/discord_emojis.py \
+            || echo "::warning::discord_emojis.py not downloaded, posting without emojis"
           python3 - <<'EOF'
-          import json, os, urllib.request
+          import json, os, sys, urllib.request
+          sys.path.insert(0, os.environ["RUNNER_TEMP"])
+          try:
+              import discord_emojis as emo
+          except Exception:
+              emo = None
+
+          def E(kind):
+              """The DTM Discord's custom emoji for this kind of post (Unicode if it has none), and a space."""
+              return emo.get(kind) + " " if emo else ""
 
           event = json.load(open(os.environ["GITHUB_EVENT_PATH"]))
           issue, repo = event["issue"], event["repository"]["name"]
@@ -28,7 +41,8 @@ jobs:
 
           payload = {
               "username": "DTM GitHub",
-              "content": f'New issue in **{repo.removeprefix("FS25_")}**',
+              "content": E("bug" if any("bug" in l["name"].lower() for l in issue.get("labels", [])) else "github")
+                         + f'New issue in **{repo.removeprefix("FS25_")}**',
               "allowed_mentions": {"parse": []},
               "embeds": [{
                   "title": f'#{issue["number"]} {issue["title"]}'[:256],
