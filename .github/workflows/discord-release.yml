@@ -87,6 +87,13 @@ jobs:
               role, webhook = os.environ["RELEASE_PINGS_ROLE"], os.environ.get("RELEASES_WEBHOOK")
               first = len(json.load(open("full-releases.json"))) <= 1
               content = f"{E('new_mod' if first else 'update')}<@&{role}> **{title}** is out!"
+              # the mod's page on dtmmods.com: a Download click there is counted (by country) for the admins' stats
+              try:
+                  page = json.load(urllib.request.urlopen("https://dtmmods.com/versions.json", timeout=20))["mods"].get(repo, {}).get("page")
+              except Exception:
+                  page = None
+              if page:
+                  content += f"\n{E('dtm')}[Download on dtmmods.com](<https://dtmmods.com{page}>)"
               embed_title, color, user, secret = title, 0xD9A441, "DTM Releases", "DISCORD_RELEASES_WEBHOOK"
 
           payload = {
